@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Marquee Singapore — CRM Strategy Presentation</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Cormorant+Garamond:wght@300;400;600&family=Rajdhani:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap');
+
+  :root {
+    --deep-purple: #0d0618;
+    --mid-purple: #1a0a2e;
+    --rich-purple: #2d1155;
+    --accent-purple: #4a1a8a;
+    --silver: #c8c8d4;
+    --silver-bright: #e8e8f0;
+    --silver-dim: #8888a0;
+    --gold: #b8960c;
+    --gold-light: #d4af37;
+    --white: #f0f0f8;
+    --red-alert: #e83a5a;
+    --teal-accent: #1a8a7a;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--deep-purple);
+    font-family: 'Rajdhani', sans-serif;
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  .nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 14px 40px;
+    background: rgba(13,6,24,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(200,200,212,0.15);
+  }
+  .nav-logo {
+    font-family: 'Playfair Display', serif;
+    font-size: 18px; font-weight: 700; letter-spacing: 0.2em;
+    color: var(--gold-light); text-transform: uppercase;
+  }
+  .nav-dots { display: flex; gap: 8px; align-items: center; }
+  .dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--silver-dim); cursor: pointer;
+    transition: all 0.3s ease;
+  }
+  .dot.active { background: var(--gold-light); transform: scale(1.4); }
+  .nav-counter {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px; color: var(--silver-dim); letter-spacing: 0.1em;
+  }
+
+  /* ─── SLIDES ─── */
+  .slides-container { }
+  .slide {
+    min-height: 100vh;
+    padding: 100px 60px 60px;
+    display: none;
+    position: relative;
+    overflow: hidden;
+    animation: slideIn 0.5s ease;
+  }
+  .slide.active { display: flex; flex-direction: column; }
+
+  @keyframes slideIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ─── BACKGROUND EFFECTS ─── */
+  .bg-glow {
+    position: absolute; border-radius: 50%;
+    filter: blur(120px); pointer-events: none; z-index: 0;
+  }
+  .glow-1 { width: 600px; height: 600px; background: rgba(74,26,138,0.15); top: -200px; right: -100px; }
+  .glow-2 { width: 400px; height: 400px; background: rgba(184,150,12,0.06); bottom: 0; left: 0; }
+  .glow-red { background: rgba(232,58,90,0.1); width: 300px; height: 300px; top: 20%; left: -100px; }
+
+  .slide-content { position: relative; z-index: 1; flex: 1; display: flex; flex-direction: column; }
+
+  /* ─── SECTION LABELS ─── */
+  .section-label {
+    display: inline-flex; align-items: center; gap: 10px;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px; letter-spacing: 0.25em; text-transform: uppercase;
+    color: var(--gold-light); margin-bottom: 16px;
+  }
+  .section-label::before {
+    content: ''; width: 30px; height: 1px; background: var(--gold-light);
+  }
+
+  .section-label.silver { color: var(--silver); }
+  .section-label.silver::before { background: var(--silver); }
+  .section-label.red { color: var(--red-alert); }
+  .section-label.red::before { background: var(--red-alert); }
+
+  /* ─── HEADINGS ─── */
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    font-weight: 900; line-height: 1.05;
+    color: var(--white);
+  }
+  h1 span { color: var(--gold-light); }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(26px, 3.5vw, 42px);
+    font-weight: 700; line-height: 1.1;
+    color: var(--white);
+  }
+  h2 span { color: var(--gold-light); }
+  h3 {
+    font-family: 'Rajdhani', sans-serif;
+    font-size: 20px; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--silver-bright);
+  }
+  .slide-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 20px; color: var(--silver); margin-top: 12px;
+    font-style: italic; line-height: 1.5;
+  }
+
+  /* ─── DIVIDER ─── */
+  .divider {
+    width: 60px; height: 2px;
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+    margin: 20px 0;
+  }
+  .divider.full { width: 100%; margin: 28px 0; background: linear-gradient(90deg, rgba(200,200,212,0.2), transparent); height: 1px; }
+
+  /* ─── STAT BOXES ─── */
+  .stat-row { display: flex; gap: 20px; margin: 20px 0; flex-wrap: wrap; }
+  .stat-box {
+    flex: 1; min-width: 150px;
+    background: rgba(45,17,85,0.4);
+    border: 1px solid rgba(200,200,212,0.15);
+    border-radius: 8px; padding: 20px 24px;
+    position: relative; overflow: hidden;
+    transition: border-color 0.3s;
+  }
+  .stat-box::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
+    background: linear-gradient(90deg, var(--gold-light), transparent);
+  }
+  .stat-box.danger::before { background: linear-gradient(90deg, var(--red-alert), transparent); }
+  .stat-box.silver-top::before { background: linear-gradient(90deg, var(--silver), transparent); }
+  .stat-number {
+    font-family: 'Space Mono', monospace;
+    font-size: 36px; font-weight: 700; line-height: 1;
+    color: var(--gold-light);
+  }
+  .stat-box.danger .stat-number { color: var(--red-alert); }
+  .stat-box.silver-top .stat-number { color: var(--silver-bright); }
+  .stat-label { font-size: 13px; color: var(--silver-dim); margin-top: 6px; letter-spacing: 0.05em; }
+  .stat-source { font-size: 11px; color: rgba(136,136,160,0.6); margin-top: 4px; font-style: italic; }
+
+  /* ─── CARDS ─── */
+  .cards-grid { display: grid; gap: 16px; margin-top: 20px; }
+  .cards-grid.two { grid-template-columns: repeat(2, 1fr); }
+  .cards-grid.three { grid-template-columns: repeat(3, 1fr); }
+  .cards-grid.four { grid-template-columns: repeat(4, 1fr); }
+
+  .card {
+    background: rgba(26,10,46,0.6);
+    border: 1px solid rgba(200,200,212,0.12);
+    border-radius: 10px; padding: 22px;
+    transition: border-color 0.3s, transform 0.2s;
+  }
+  .card:hover { border-color: rgba(212,175,55,0.35); transform: translateY(-2px); }
+  .card-icon { font-size: 24px; margin-bottom: 10px; }
+  .card-title {
+    font-size: 15px; font-weight: 600; letter-spacing: 0.05em;
+    color: var(--silver-bright); margin-bottom: 8px;
+  }
+  .card-body { font-size: 14px; color: var(--silver-dim); line-height: 1.6; }
+  .card-tag {
+    display: inline-block; margin-top: 10px;
+    font-family: 'Space Mono', monospace; font-size: 10px;
+    padding: 3px 10px; border-radius: 30px;
+    background: rgba(74,26,138,0.4); border: 1px solid rgba(212,175,55,0.3);
+    color: var(--gold-light); letter-spacing: 0.1em;
+  }
+  .card-tag.danger { background: rgba(232,58,90,0.1); border-color: rgba(232,58,90,0.3); color: var(--red-alert); }
+  .card-tag.silver { background: rgba(200,200,212,0.08); border-color: rgba(200,200,212,0.2); color: var(--silver); }
+
+  /* ─── CHALLENGE BARS ─── */
+  .challenge-item { margin-bottom: 18px; }
+  .challenge-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+  .challenge-name { font-size: 15px; font-weight: 600; color: var(--silver-bright); }
+  .challenge-beta {
+    font-family: 'Space Mono', monospace; font-size: 13px; color: var(--gold-light);
+  }
+  .bar-track {
+    height: 6px; background: rgba(200,200,212,0.1); border-radius: 3px; overflow: hidden;
+  }
+  .bar-fill { height: 100%; border-radius: 3px; transition: width 1s ease; }
+  .bar-music { background: linear-gradient(90deg, var(--gold-light), #d4af37cc); width: 85%; }
+  .bar-service { background: linear-gradient(90deg, var(--red-alert), #e83a5acc); width: 57%; }
+  .bar-price { background: linear-gradient(90deg, var(--silver), #c8c8d488); width: 47%; }
+  .challenge-desc { font-size: 13px; color: var(--silver-dim); margin-top: 6px; }
+
+  /* ─── LOYALTY MODEL ─── */
+  .loyalty-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    margin: 20px 0; border: 1px solid rgba(200,200,212,0.15); border-radius: 10px; overflow: hidden;
+  }
+  .loyalty-cell {
+    padding: 20px; text-align: center; position: relative;
+  }
+  .lc-loyals { background: rgba(26,138,122,0.2); }
+  .lc-latent { background: rgba(74,26,138,0.2); }
+  .lc-spurious { background: rgba(184,150,12,0.15); }
+  .lc-noloyalty { background: rgba(232,58,90,0.15); }
+  .loyalty-cell-title { font-weight: 700; font-size: 16px; }
+  .loyalty-cell-pct { font-family: 'Space Mono', monospace; font-size: 22px; font-weight: 700; margin: 4px 0; }
+  .loyalty-cell-desc { font-size: 12px; color: var(--silver-dim); }
+  .lc-loyals .loyalty-cell-pct { color: #4dc4b0; }
+  .lc-latent .loyalty-cell-pct { color: #9a6bda; }
+  .lc-spurious .loyalty-cell-pct { color: var(--gold-light); }
+  .lc-noloyalty .loyalty-cell-pct { color: var(--red-alert); }
+  .loyalty-axis-x { text-align: center; font-size: 11px; color: var(--silver-dim); margin-top: 6px; letter-spacing: 0.08em; }
+  .loyalty-axis-label { font-size: 11px; color: var(--silver-dim); letter-spacing: 0.08em; }
+
+  /* ─── TWO COL ─── */
+  .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 24px; }
+  .two-col.wide { grid-template-columns: 1.3fr 1fr; }
+
+  /* ─── PIPELINE / PHASE ─── */
+  .phase-row { display: flex; gap: 0; margin: 20px 0; }
+  .phase-step {
+    flex: 1; padding: 18px 20px;
+    position: relative; background: rgba(26,10,46,0.5);
+    border-top: 2px solid rgba(200,200,212,0.15);
+  }
+  .phase-step::after {
+    content: '▶'; position: absolute; right: -12px; top: 50%; transform: translateY(-50%);
+    color: var(--silver-dim); font-size: 12px; z-index: 2;
+  }
+  .phase-step:last-child::after { display: none; }
+  .phase-step:first-child { border-radius: 8px 0 0 8px; border-top-color: var(--gold-light); }
+  .phase-step.p2 { border-top-color: var(--silver); }
+  .phase-step.p3 { border-top-color: #9a6bda; border-radius: 0 8px 8px 0; }
+  .phase-num { font-family: 'Space Mono', monospace; font-size: 10px; color: var(--silver-dim); letter-spacing: 0.1em; margin-bottom: 6px; }
+  .phase-title { font-size: 14px; font-weight: 600; color: var(--silver-bright); margin-bottom: 6px; }
+  .phase-body { font-size: 12px; color: var(--silver-dim); line-height: 1.5; }
+
+  /* ─── INSIGHT CALLOUT ─── */
+  .callout {
+    background: rgba(184,150,12,0.08);
+    border-left: 3px solid var(--gold-light);
+    border-radius: 0 8px 8px 0;
+    padding: 14px 18px; margin: 16px 0;
+    font-size: 14px; color: var(--silver); line-height: 1.6;
+  }
+  .callout.red { background: rgba(232,58,90,0.08); border-left-color: var(--red-alert); }
+  .callout strong { color: var(--white); }
+
+  /* ─── GAP INDICATORS ─── */
+  .gap-row { display: flex; gap: 12px; margin: 14px 0; flex-wrap: wrap; }
+  .gap-pill {
+    display: flex; align-items: center; gap: 8px;
+    background: rgba(232,58,90,0.1); border: 1px solid rgba(232,58,90,0.25);
+    border-radius: 30px; padding: 6px 14px;
+    font-size: 13px; color: var(--silver-bright);
+  }
+  .gap-pill-num { font-family: 'Space Mono', monospace; font-size: 11px; color: var(--red-alert); }
+
+  /* ─── RECOMMENDATION HEADER ─── */
+  .rec-header {
+    display: flex; align-items: center; gap: 16px; margin-bottom: 20px;
+  }
+  .rec-icon-circle {
+    width: 52px; height: 52px; border-radius: 50%;
+    background: rgba(74,26,138,0.4);
+    border: 1px solid rgba(212,175,55,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px; flex-shrink: 0;
+  }
+  .rec-title-block h2 { font-size: 30px; }
+
+  /* ─── APP FEATURES ─── */
+  .app-features { display: flex; flex-direction: column; gap: 10px; }
+  .app-feature {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px 16px; border-radius: 8px;
+    background: rgba(45,17,85,0.3); border: 1px solid rgba(200,200,212,0.08);
+  }
+  .af-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+  .af-title { font-size: 14px; font-weight: 600; color: var(--silver-bright); }
+  .af-body { font-size: 13px; color: var(--silver-dim); margin-top: 2px; }
+
+  /* ─── ROADMAP ─── */
+  .roadmap { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; margin: 20px 0; }
+  .roadmap-phase { padding: 20px; border-top: 2px solid; }
+  .rp-1 { border-color: var(--gold-light); }
+  .rp-2 { border-color: var(--silver); }
+  .rp-3 { border-color: #9a6bda; }
+  .rp-period { font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em; margin-bottom: 8px; }
+  .rp-1 .rp-period { color: var(--gold-light); }
+  .rp-2 .rp-period { color: var(--silver); }
+  .rp-3 .rp-period { color: #9a6bda; }
+  .rp-title { font-size: 15px; font-weight: 700; color: var(--silver-bright); margin-bottom: 10px; }
+  .rp-items { display: flex; flex-direction: column; gap: 6px; }
+  .rp-item { font-size: 13px; color: var(--silver-dim); display: flex; gap: 8px; }
+  .rp-item::before { content: '—'; color: var(--silver-dim); flex-shrink: 0; }
+
+  /* ─── TRAINING SCENES ─── */
+  .scene-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+  .scene-table th {
+    text-align: left; padding: 10px 14px;
+    font-family: 'Space Mono', monospace; font-size: 11px; letter-spacing: 0.1em;
+    color: var(--gold-light); border-bottom: 1px solid rgba(212,175,55,0.3);
+  }
+  .scene-table td {
+    padding: 10px 14px; font-size: 13px; color: var(--silver-dim);
+    border-bottom: 1px solid rgba(200,200,212,0.07); vertical-align: top; line-height: 1.5;
+  }
+  .scene-table tr:hover td { background: rgba(74,26,138,0.15); }
+  .scene-highlight { color: var(--silver-bright); font-weight: 600; }
+
+  /* ─── VIP TIER ─── */
+  .vip-tier-row { display: flex; gap: 16px; margin: 20px 0; }
+  .vip-tier {
+    flex: 1; padding: 20px; border-radius: 10px;
+    background: rgba(26,10,46,0.6);
+    border: 1px solid rgba(200,200,212,0.1);
+    position: relative; overflow: hidden;
+  }
+  .vt-diamond { border-top: 3px solid var(--gold-light); }
+  .vt-ruby { border-top: 3px solid var(--red-alert); }
+  .vt-title { font-family: 'Playfair Display', serif; font-size: 18px; font-weight: 700; margin-bottom: 6px; }
+  .vt-diamond .vt-title { color: var(--gold-light); }
+  .vt-ruby .vt-title { color: var(--red-alert); }
+  .vt-desc { font-size: 13px; color: var(--silver-dim); margin-bottom: 12px; }
+  .vt-perk { display: flex; gap: 8px; align-items: flex-start; margin-bottom: 6px; font-size: 13px; color: var(--silver); }
+  .vt-perk::before { content: '◆'; font-size: 8px; color: var(--gold-light); margin-top: 4px; flex-shrink: 0; }
+  .vt-ruby .vt-perk::before { color: var(--red-alert); }
+
+  /* ─── NAVIGATION BUTTONS ─── */
+  .slide-nav {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: auto; padding-top: 30px;
+  }
+  .btn {
+    padding: 10px 28px; border-radius: 4px; cursor: pointer;
+    font-family: 'Rajdhani', sans-serif; font-size: 14px;
+    font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+    border: none; transition: all 0.25s ease; text-decoration: none;
+  }
+  .btn-outline {
+    background: transparent; color: var(--silver);
+    border: 1px solid rgba(200,200,212,0.25);
+  }
+  .btn-outline:hover { border-color: var(--silver); color: var(--white); }
+  .btn-gold {
+    background: var(--gold-light); color: var(--deep-purple);
+  }
+  .btn-gold:hover { background: #e8c84a; }
+  .btn-hidden { visibility: hidden; }
+  .slide-num {
+    font-family: 'Space Mono', monospace; font-size: 12px; color: var(--silver-dim);
+  }
+
+  /* ─── COVER ─── */
+  .cover-layout {
+    min-height: 100vh; display: flex; flex-direction: column;
+    justify-content: center; align-items: flex-start; padding: 0 60px;
+    position: relative; overflow: hidden;
+  }
+  .cover-line {
+    width: 1px; height: 120px; background: linear-gradient(180deg, transparent, var(--gold-light), transparent);
+    position: absolute; left: 40px; top: 50%; transform: translateY(-50%);
+  }
+  .cover-eyebrow {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 0.3em; color: var(--gold-light); text-transform: uppercase;
+    margin-bottom: 20px;
+  }
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(48px, 7vw, 90px);
+    font-weight: 900; line-height: 0.95;
+    color: var(--white);
+  }
+  .cover-title .highlight { color: var(--gold-light); display: block; }
+  .cover-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 22px; font-style: italic;
+    color: var(--silver); margin-top: 20px; max-width: 600px; line-height: 1.5;
+  }
+  .cover-meta { display: flex; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
+  .cover-meta-item { font-size: 13px; color: var(--silver-dim); }
+  .cover-meta-item strong { color: var(--silver); display: block; font-size: 14px; }
+  .cover-decoration {
+    position: absolute; right: 60px; top: 50%; transform: translateY(-50%);
+    width: 300px; height: 300px; border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.12);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .cover-decoration::before {
+    content: ''; width: 220px; height: 220px; border-radius: 50%;
+    border: 1px solid rgba(212,175,55,0.08); position: absolute;
+  }
+  .cover-decoration::after {
+    content: 'M'; font-family: 'Playfair Display', serif;
+    font-size: 120px; font-weight: 900;
+    color: rgba(212,175,55,0.08);
+  }
+
+  /* ─── SECTION DIVIDER SLIDE ─── */
+  .section-divider-slide {
+    background: linear-gradient(135deg, #0d0618 0%, #1a0a2e 50%, #0d0618 100%);
+    justify-content: center; align-items: center; text-align: center;
+  }
+  .sd-label {
+    font-family: 'Space Mono', monospace; font-size: 11px;
+    letter-spacing: 0.4em; color: var(--gold-light); margin-bottom: 16px;
+  }
+  .sd-number {
+    font-family: 'Playfair Display', serif; font-size: 140px; font-weight: 900;
+    color: rgba(212,175,55,0.05); position: absolute;
+    top: 50%; transform: translateY(-50%);
+  }
+  .sd-title { font-family: 'Playfair Display', serif; font-size: 60px; font-weight: 900; }
+  .sd-subtitle { font-size: 18px; color: var(--silver-dim); margin-top: 16px; max-width: 500px; }
+
+  /* ─── SUMMARY BOX ─── */
+  .summary-row { display: flex; gap: 16px; margin-top: 20px; }
+  .summary-pill {
+    flex: 1; padding: 16px 20px; border-radius: 8px;
+    background: rgba(26,10,46,0.6);
+    border: 1px solid rgba(200,200,212,0.12);
+    font-size: 14px; color: var(--silver);
+    display: flex; flex-direction: column; gap: 6px;
+  }
+  .sp-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.15em; color: var(--silver-dim); }
+  .sp-value { font-size: 20px; font-weight: 700; color: var(--white); }
+  .sp-value.gold { color: var(--gold-light); }
+  .sp-value.red { color: var(--red-alert); }
+
+  /* ─── MISER MATRIX ─── */
+  .matrix-grid {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    background: rgba(200,200,212,0.08); border-radius: 10px; overflow: hidden;
+    margin: 16px 0;
+  }
+  .mx-cell { padding: 18px; background: var(--deep-purple); }
+  .mx-miser { background: rgba(232,58,90,0.12); }
+  .mx-advocate { background: rgba(26,138,122,0.12); }
+  .mx-affluent { background: rgba(184,150,12,0.12); }
+  .mx-champion { background: rgba(74,26,138,0.25); }
+  .mx-label { font-family: 'Space Mono', monospace; font-size: 10px; letter-spacing: 0.12em; color: var(--silver-dim); margin-bottom: 4px; }
+  .mx-title { font-size: 16px; font-weight: 700; margin-bottom: 6px; }
+  .mx-pct { font-family: 'Space Mono', monospace; font-size: 24px; font-weight: 700; margin-bottom: 4px; }
+  .mx-desc { font-size: 12px; color: var(--silver-dim); }
+  .mx-miser .mx-title, .mx-miser .mx-pct { color: var(--red-alert); }
+  .mx-advocate .mx-title, .mx-advocate .mx-pct { color: #4dc4b0; }
+  .mx-affluent .mx-title, .mx-affluent .mx-pct { color: var(--gold-light); }
+  .mx-champion .mx-title, .mx-champion .mx-pct { color: #9a6bda; }
+
+  .matrix-axis { display: flex; justify-content: space-between; align-items: center; margin-top: 4px; }
+  .ax-label { font-size: 11px; color: var(--silver-dim); letter-spacing: 0.05em; }
+
+  /* ─── NPS VISUAL ─── */
+  .nps-bar-wrap { margin: 20px 0; }
+  .nps-bar {
+    height: 32px; border-radius: 4px; overflow: hidden;
+    display: flex; position: relative;
+  }
+  .nps-seg { display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; }
+  .seg-det { background: var(--red-alert); width: 47%; }
+  .seg-pas { background: var(--silver-dim); width: 24%; }
+  .seg-pro { background: #4dc4b0; width: 29%; }
+  .nps-labels { display: flex; justify-content: space-between; margin-top: 6px; }
+  .nps-lab { font-size: 12px; color: var(--silver-dim); }
+  .nps-score {
+    font-family: 'Space Mono', monospace; font-size: 48px; font-weight: 700;
+    color: var(--red-alert); text-align: center; margin-bottom: 4px;
+  }
+  .nps-sub { font-size: 13px; color: var(--silver-dim); text-align: center; }
+
+  /* ─── BUDGET BAR ─── */
+  .budget-item { margin-bottom: 14px; }
+  .budget-header { display: flex; justify-content: space-between; margin-bottom: 4px; }
+  .budget-name { font-size: 14px; color: var(--silver-bright); }
+  .budget-amt { font-family: 'Space Mono', monospace; font-size: 13px; color: var(--gold-light); }
+  .budget-track { height: 8px; background: rgba(200,200,212,0.08); border-radius: 4px; overflow: hidden; }
+  .budget-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--accent-purple), var(--gold-light)); }
+
+  /* ─── TAG ROW ─── */
+  .tag-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0; }
+  .tag {
+    padding: 5px 14px; border-radius: 30px; font-size: 12px; letter-spacing: 0.05em;
+    border: 1px solid rgba(200,200,212,0.15); color: var(--silver-dim);
+    background: rgba(45,17,85,0.3);
+  }
+  .tag.active { color: var(--gold-light); border-color: rgba(212,175,55,0.3); background: rgba(184,150,12,0.1); }
+
+  /* ─── CRMS/SILO ─── */
+  .silo-row { display: flex; gap: 12px; margin: 16px 0; flex-wrap: wrap; }
+  .silo-pill {
+    padding: 10px 16px; border-radius: 6px;
+    background: rgba(45,17,85,0.4); border: 1px solid rgba(200,200,212,0.12);
+    font-size: 13px; color: var(--silver); font-weight: 500;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .silo-pill .dot-icon { width: 8px; height: 8px; border-radius: 50%; background: var(--red-alert); }
+
+  /* ─── SCROLLABLE for long slides ─── */
+  .scroll-content { overflow-y: auto; max-height: calc(100vh - 200px); padding-right: 10px; }
+
+  /* ─── UTIL ─── */
+  .mt-8 { margin-top: 8px; }
+  .mt-12 { margin-top: 12px; }
+  .mt-16 { margin-top: 16px; }
+  .mt-20 { margin-top: 20px; }
+  .text-gold { color: var(--gold-light); }
+  .text-red { color: var(--red-alert); }
+  .text-silver { color: var(--silver); }
+  .text-sm { font-size: 13px; }
+  .text-xs { font-size: 11px; color: var(--silver-dim); }
+  .fw-600 { font-weight: 600; }
+  .italic { font-style: italic; font-family: 'Cormorant Garamond', serif; font-size: 15px; }
+
+  /* ─── FOOTER LINE ─── */
+  .slide-footer {
+    position: absolute; bottom: 0; left: 0; right: 0;
+    height: 2px; background: linear-gradient(90deg, var(--gold-light), rgba(212,175,55,0.2), transparent);
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav class="nav">
+  <div class="nav-logo">Marquee · Singapore</div>
+  <div class="nav-dots" id="navDots"></div>
+  <div class="nav-counter" id="navCounter">01 / 14</div>
+</nav>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 1: COVER
+═══════════════════════════════════════════════ -->
+<div class="slide active" id="slide-1">
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="cover-layout">
+    <div class="cover-decoration"></div>
+    <div class="cover-eyebrow">CRM Strategy · Group 2 · MKTG225</div>
+    <div class="cover-title">
+      Challenges &amp;
+      <span class="highlight">Recommendations</span>
+    </div>
+    <div class="cover-subtitle">
+      A data-driven CRM blueprint for Marquee Singapore — addressing the root causes of low brand loyalty to drive sustainable customer equity growth.
+    </div>
+    <div class="cover-meta">
+      <div class="cover-meta-item"><strong>Client</strong>Marquee Singapore / Tao Group</div>
+      <div class="cover-meta-item"><strong>Current NPS</strong>−12.5%</div>
+      <div class="cover-meta-item"><strong>Target NPS</strong>+17.5%</div>
+      <div class="cover-meta-item"><strong>Est. Revenue Uplift</strong>$9.06M</div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav" style="position:absolute;bottom:30px;left:60px;right:60px;">
+    <span class="btn btn-hidden">←</span>
+    <span class="slide-num">01 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 2: CHALLENGES SECTION DIVIDER
+═══════════════════════════════════════════════ -->
+<div class="slide section-divider-slide" id="slide-2">
+  <div class="bg-glow glow-1" style="background:rgba(232,58,90,0.08);"></div>
+  <div class="slide-content" style="justify-content:center;align-items:center;text-align:center;">
+    <div class="sd-label">Part I</div>
+    <div class="sd-title">Challenges <span style="color:var(--red-alert)">Faced</span></div>
+    <div class="sd-subtitle">Diagnosing the structural barriers to loyalty, growth, and premium brand delivery</div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav" style="position:absolute;bottom:30px;left:60px;right:60px;">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">02 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 3: OVERARCHING CHALLENGE — LOW LOYALTY
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-3">
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-red"></div>
+  <div class="slide-content">
+    <div class="section-label red">Challenge 7.1 — Overarching</div>
+    <h2>Low Brand <span>Loyalty</span></h2>
+    <div class="slide-subtitle">Three converging analytical signals confirm a structural loyalty deficit</div>
+    <div class="divider"></div>
+
+    <div class="two-col wide">
+      <!-- LEFT: Data -->
+      <div>
+        <!-- NPS -->
+        <h3 class="mt-8">Net Promoter Score</h3>
+        <div class="nps-score">−12.5%</div>
+        <div class="nps-sub">More detractors than promoters — attitudinal loyalty is critically low</div>
+        <div class="nps-bar-wrap mt-12">
+          <div class="nps-bar">
+            <div class="nps-seg seg-det">47% Detractors</div>
+            <div class="nps-seg seg-pas" style="color:var(--deep-purple);">24%</div>
+            <div class="nps-seg seg-pro" style="color:var(--deep-purple);">29% Promoters</div>
+          </div>
+          <div class="nps-labels">
+            <span class="nps-lab text-red">0–6: Detractor</span>
+            <span class="nps-lab">7–8: Passive</span>
+            <span class="nps-lab" style="color:#4dc4b0;">9–10: Promoter</span>
+          </div>
+        </div>
+
+        <div class="divider full"></div>
+        <!-- Dick & Basu Loyalty -->
+        <h3>Dick &amp; Basu Loyalty Model</h3>
+        <p class="text-sm text-silver mt-8">Behavioural × Attitudinal loyalty mapping reveals the true loyalty profile</p>
+        <div class="loyalty-grid mt-12">
+          <div class="loyalty-cell lc-loyals">
+            <div class="loyalty-cell-title" style="color:#4dc4b0;">Loyals</div>
+            <div class="loyalty-cell-pct">38.5%</div>
+            <div class="loyalty-cell-desc">Strong attitude + High repeat</div>
+          </div>
+          <div class="loyalty-cell lc-latent">
+            <div class="loyalty-cell-title" style="color:#9a6bda;">Latent</div>
+            <div class="loyalty-cell-pct">8%</div>
+            <div class="loyalty-cell-desc">Positive attitude, low frequency</div>
+          </div>
+          <div class="loyalty-cell lc-spurious">
+            <div class="loyalty-cell-title" style="color:var(--gold-light);">Spurious</div>
+            <div class="loyalty-cell-pct">4.5%</div>
+            <div class="loyalty-cell-desc">Repeat visits, weak attitude</div>
+          </div>
+          <div class="loyalty-cell lc-noloyalty">
+            <div class="loyalty-cell-title" style="color:var(--red-alert);">No Loyalty</div>
+            <div class="loyalty-cell-pct">49%</div>
+            <div class="loyalty-cell-desc">Weak attitude + Low repeat — majority segment</div>
+          </div>
+        </div>
+        <div class="loyalty-axis-x">← Relative Attitude Strength / Repeat Purchase →</div>
+      </div>
+
+      <!-- RIGHT: Customer Matrix -->
+      <div>
+        <h3>Customer Matrix — CLV × CRV</h3>
+        <p class="text-sm text-silver mt-8">B2C segmentation using Customer Lifetime Value and Customer Referral Value reveals value distribution</p>
+        <div class="matrix-grid mt-12">
+          <div class="mx-cell mx-affluent">
+            <div class="mx-label">HIGH CLV · LOW CRV</div>
+            <div class="mx-title">Affluents</div>
+            <div class="mx-pct">5%</div>
+          </div>
+          <div class="mx-cell mx-champion">
+            <div class="mx-label">HIGH CLV · HIGH CRV</div>
+            <div class="mx-title">Champions</div>
+            <div class="mx-pct">14%</div>
+          </div>
+          <div class="mx-cell mx-miser">
+            <div class="mx-label">LOW CLV · LOW CRV</div>
+            <div class="mx-title">Misers</div>
+            <div class="mx-pct">68%</div>
+            <div class="mx-desc">Dominant segment — low revenue, low advocacy</div>
+          </div>
+          <div class="mx-cell mx-advocate">
+            <div class="mx-label">LOW CLV · HIGH CRV</div>
+            <div class="mx-title">Advocates</div>
+            <div class="mx-pct">13%</div>
+          </div>
+        </div>
+        <div class="matrix-axis">
+          <span class="ax-label">← Low CRV</span>
+          <span class="ax-label">High CRV →</span>
+        </div>
+
+        <div class="callout red mt-16">
+          <strong>Strategic implication:</strong> 77% of customers discover Marquee through word-of-mouth — yet 68% are Misers with near-zero referral value. This acquisition channel is severely undermined by the loyalty deficit.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">03 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 4: CHALLENGE — MUSIC
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-4">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label red">Challenge 7.2</div>
+    <h2>Music — The <span>Strongest</span> Satisfaction Driver</h2>
+    <div class="slide-subtitle">Regression analysis confirms music as the primary lever of customer satisfaction, yet it remains a persistent pain point</div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>Regression Results — Key Drivers</h3>
+        <p class="text-sm text-silver mt-8 mb-8">Standardised beta coefficients from multi-variable regression (n=100+). Higher β = greater impact on satisfaction.</p>
+        <div style="margin-top:16px;">
+          <div class="challenge-item">
+            <div class="challenge-header">
+              <span class="challenge-name">🎵 Music &amp; Event Quality</span>
+              <span class="challenge-beta">β = 0.34 ★</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill bar-music"></div></div>
+            <div class="challenge-desc">Strongest driver — 1-point improvement yields the largest satisfaction gain</div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-header">
+              <span class="challenge-name">👥 Service Quality</span>
+              <span class="challenge-beta">β = 0.23</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill bar-service"></div></div>
+            <div class="challenge-desc">Second-strongest predictor of overall satisfaction</div>
+          </div>
+          <div class="challenge-item">
+            <div class="challenge-header">
+              <span class="challenge-name">💰 Price / Value for Money</span>
+              <span class="challenge-beta">β = 0.19</span>
+            </div>
+            <div class="bar-track"><div class="bar-fill bar-price"></div></div>
+            <div class="challenge-desc">Significant but least impactful — a perception problem, not a pricing problem</div>
+          </div>
+        </div>
+
+        <div class="callout mt-16">
+          <strong>Key insight:</strong> Music is both the <em>most impactful</em> driver of satisfaction and a <em>recurring source of complaints</em> — closing this gap represents the single highest-leverage opportunity for Marquee.
+        </div>
+      </div>
+
+      <div>
+        <h3>What Customers Are Saying</h3>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">⚠️</div>
+            <div>
+              <div class="af-title">Theme Misalignment</div>
+              <div class="af-body">Music played on themed nights frequently differed from what was advertised, violating pre-purchase expectations set by marketing</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">😞</div>
+            <div>
+              <div class="af-title">DJ Underperformance</div>
+              <div class="af-body">DJs underwhelmed relative to the premium entry price — especially on non-headliner nights, where playlists were repetitive</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🔁</div>
+            <div>
+              <div class="af-title">"The Music Is Bad"</div>
+              <div class="af-body">Multiple qualitative responses cited poor music as a primary reason for not returning — the top deterrent to repeat patronage</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3 class="mt-12">SERVQUAL Gap Analysis</h3>
+        <div class="gap-row mt-8">
+          <div class="gap-pill">
+            <span class="gap-pill-num">Gap 1</span>
+            Knowledge gap — Marquee misunderstands what music customers expect on themed nights
+          </div>
+          <div class="gap-pill">
+            <span class="gap-pill-num">Gap 4</span>
+            Communication gap — High standards are communicated but inconsistently delivered
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">04 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 5: CHALLENGE — SERVICE
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-5">
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-red"></div>
+  <div class="slide-content">
+    <div class="section-label red">Challenge 7.3</div>
+    <h2>Service Quality — <span>Systematic</span> Breakdown</h2>
+    <div class="slide-subtitle">The highest negativity rate of any category, with misconduct extending beyond inefficiency to reputational risk</div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <div class="stat-row">
+          <div class="stat-box danger">
+            <div class="stat-number">60/100</div>
+            <div class="stat-label">Negative Google Reviews citing service issues</div>
+          </div>
+          <div class="stat-box danger">
+            <div class="stat-number">66.7%</div>
+            <div class="stat-label">Negativity rate — highest across all complaint categories</div>
+          </div>
+        </div>
+        <div class="stat-box danger mt-8">
+          <div class="stat-number">−1.4</div>
+          <div class="stat-label">Net sentiment score for service — the most negative dimension</div>
+        </div>
+
+        <div class="divider full"></div>
+        <h3>Affinity Diagram — Service Failure Clusters</h3>
+        <div class="cards-grid two mt-12">
+          <div class="card">
+            <div class="card-icon">🚪</div>
+            <div class="card-title">Door &amp; Entry</div>
+            <div class="card-body">Intimidating bouncer behaviour; discriminatory entry decisions based on appearance or perceived social status</div>
+            <div class="card-tag danger">Critical</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🍸</div>
+            <div class="card-title">Bar Service</div>
+            <div class="card-body">Bartender misconduct; slow service at peak hours; inconsistent drink quality and presentation</div>
+            <div class="card-tag danger">High</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🛡️</div>
+            <div class="card-title">Security Conduct</div>
+            <div class="card-body">Reported incidents of rough physical handling; lack of de-escalation training in high-pressure situations</div>
+            <div class="card-tag danger">Critical</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🥂</div>
+            <div class="card-title">VIP Table Service</div>
+            <div class="card-body">Long waits for bottle service; absence of dedicated host attention; minimum spend disputes at checkout</div>
+            <div class="card-tag danger">High</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>SERVQUAL Dimensions — Performance Gaps</h3>
+        <p class="text-sm text-silver mt-8">Parasuraman's model applied to frontline service delivery at Marquee</p>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">⚡</div>
+            <div>
+              <div class="af-title">Responsiveness — Weak</div>
+              <div class="af-body">Staff slow to respond to guest needs; no debrief culture to learn from service failures</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">✅</div>
+            <div>
+              <div class="af-title">Reliability — Inconsistent</div>
+              <div class="af-body">Service standards vary significantly between nights, DJs, and individual staff members</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🤝</div>
+            <div>
+              <div class="af-title">Assurance — Compromised</div>
+              <div class="af-body">Trust eroded by misconduct incidents — directly converts satisfied customers into detractors</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">💛</div>
+            <div>
+              <div class="af-title">Empathy — Absent</div>
+              <div class="af-body">Frontline staff do not convey genuine care; no evidence of customer-first culture on the floor</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout red mt-16">
+          <strong>Gap 3 (Service Delivery):</strong> Frontline staff inconsistently or inadequately deliver the service standards expected of a premium nightclub — this gap is the most operationally urgent to close.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">05 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 6: CHALLENGE — PRICE / VALUE GAP
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-6">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label red">Challenge 7.4</div>
+    <h2>Price — A <span>Perception</span> Problem, Not a Pricing Problem</h2>
+    <div class="slide-subtitle">Customers accept the ticket price as market-fair; the dissatisfaction lies in a mismatch between price paid and experience delivered</div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>Van Westendorp Price Sensitivity Meter</h3>
+        <p class="text-sm text-silver mt-8">Applied to General Admission ticket pricing to identify acceptable price boundaries</p>
+        <div class="stat-row mt-12">
+          <div class="stat-box silver-top">
+            <div class="stat-number">$30</div>
+            <div class="stat-label">Current GA Ticket Price (IDP) — accepted as market norm</div>
+          </div>
+          <div class="stat-box silver-top">
+            <div class="stat-number">$25</div>
+            <div class="stat-label">Optimal Price Point (OPP) — lowest resistance</div>
+          </div>
+          <div class="stat-box danger">
+            <div class="stat-number">$20.82</div>
+            <div class="stat-label">Point of Marginal Cheapness — do not breach without losing premium positioning</div>
+          </div>
+        </div>
+        <div class="callout mt-12">
+          <strong>OPP &lt; IDP → Price stress exists,</strong> but the gap is moderate. Customers feel mild tension but accept current pricing as the industry benchmark. Reducing prices risks breaching PMC and undermining brand equity.
+        </div>
+        <div class="divider full mt-16"></div>
+        <h3>Survey Price Satisfaction</h3>
+        <div class="stat-row mt-8">
+          <div class="stat-box silver-top">
+            <div class="stat-number">6.12</div>
+            <div class="stat-label">Avg price satisfaction score (out of 10)</div>
+          </div>
+          <div class="stat-box danger">
+            <div class="stat-number">±2.34</div>
+            <div class="stat-label">High std deviation — inconsistent value perception across segments</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>75% of Price-Related Reviews Are Negative</h3>
+        <p class="text-sm text-silver mt-8">Google Reviews analysis confirms the value gap — customers feel the price is not justified by the experience received</p>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">🎟️</div>
+            <div>
+              <div class="af-title">Entry Tickets</div>
+              <div class="af-body">Perceived as expensive relative to the music and service quality actually experienced on the night</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🥃</div>
+            <div>
+              <div class="af-title">Drinks Pricing</div>
+              <div class="af-body">Premium drink prices not matched by premium bartender experience or presentation quality</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">👑</div>
+            <div>
+              <div class="af-title">VIP Table Spend</div>
+              <div class="af-body">Diamond/Ruby customers feel the VIP experience does not meaningfully differ from general admission — undermining willingness to pay</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout red mt-16">
+          <strong>Root Cause:</strong> The issue is not the price — it is the failure to consistently deliver an experience that justifies the price. Closing service and music gaps will naturally repair value perception without any price reduction.
+        </div>
+        <div class="tag-row mt-12">
+          <span class="tag">Expectancy Disconfirmation Theory</span>
+          <span class="tag">Value-in-Use</span>
+          <span class="tag">Gap 5 Resolution</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">06 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 7: CHALLENGE — FRAGMENTED CRM DATA
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-7">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label red">Challenge 7.5</div>
+    <h2>Fragmented CRM Data — <span>No Unified</span> Customer View</h2>
+    <div class="slide-subtitle">Six siloed entry channels produce six disconnected data streams — making analytical CRM operationally impossible</div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>Six Disconnected Touchpoints</h3>
+        <p class="text-sm text-silver mt-8">Each entry channel captures data independently, with no integration or unified customer profile</p>
+        <div class="silo-row mt-12">
+          <div class="silo-pill"><span class="dot-icon"></span>SevenRooms — Table Bookings</div>
+          <div class="silo-pill"><span class="dot-icon"></span>Aentry — 3rd Party GA Ticketing</div>
+          <div class="silo-pill"><span class="dot-icon"></span>MBS Sands Membership</div>
+          <div class="silo-pill"><span class="dot-icon"></span>Tao Group Website — GA + Tables</div>
+          <div class="silo-pill"><span class="dot-icon"></span>Promoters — Table Bookings</div>
+          <div class="silo-pill"><span class="dot-icon"></span>Door Entry — Walk-in GA</div>
+        </div>
+
+        <div class="callout red mt-20">
+          <strong>Consequence:</strong> A Diamond-tier VIP booking via SevenRooms is <em>invisible</em> to the Aentry ticketing system. A student at the door does not even register as a customer. Without unified data, customer scoring cannot be operationalised.
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3>What Marquee Cannot Do Today</h3>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">❌</div>
+            <div><div class="af-title">Personalise at Scale</div><div class="af-body">No consolidated profile means no targeted event recommendations or personalised communications</div></div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">❌</div>
+            <div><div class="af-title">Score Customers Accurately</div><div class="af-body">Cannot apply Diamond / Ruby / Common Stone scoring when visit history is split across 6 systems</div></div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">❌</div>
+            <div><div class="af-title">Trigger Retention Actions</div><div class="af-body">Cannot identify when a Ruby is trending toward Diamond behaviour and respond with an upgrade offer</div></div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Strategic CRM Framework Gap</h3>
+        <p class="text-sm text-silver mt-8">Francis Buttle's CRM Model requires consolidated customer data as a foundation — Marquee is unable to execute Phase 1 (Customer Portfolio Analysis) without it</p>
+        <div class="cards-grid" style="grid-template-columns:1fr;margin-top:16px;gap:12px;">
+          <div class="card">
+            <div class="card-title" style="color:var(--red-alert);">Analytical CRM — Broken</div>
+            <div class="card-body">Cannot compute CLV, identify switching risk, or segment profitability without a single source of truth on customer behaviour</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--red-alert);">Operational CRM — Incomplete</div>
+            <div class="card-body">No automation for retention triggers, upsell prompts, or personalised offers. The platform strategy focuses on acquisition, not relationship building</div>
+          </div>
+          <div class="card">
+            <div class="card-title" style="color:var(--gold-light);">Strategic CRM — Aspired, Not Delivered</div>
+            <div class="card-body">Customer-centric ambition is present, but cannot be executed without the operational and analytical CRM foundations in place</div>
+          </div>
+        </div>
+        <div class="tag-row mt-16">
+          <span class="tag active">Analytical CRM</span>
+          <span class="tag active">Operational CRM</span>
+          <span class="tag">Customer Scoring</span>
+          <span class="tag">LTV Estimation</span>
+          <span class="tag">RFM Analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer" style="background:linear-gradient(90deg,var(--red-alert),rgba(232,58,90,0.1),transparent);"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">07 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 8: RECOMMENDATIONS SECTION DIVIDER
+═══════════════════════════════════════════════ -->
+<div class="slide section-divider-slide" id="slide-8">
+  <div class="bg-glow glow-1" style="background:rgba(74,26,138,0.2);"></div>
+  <div class="slide-content" style="justify-content:center;align-items:center;text-align:center;">
+    <div class="sd-label">Part II</div>
+    <div class="sd-title">Recommendations</div>
+    <div class="sd-subtitle">Four integrated initiatives to close the loyalty gap, unify customer data, and deliver a premium experience consistently</div>
+    <div class="summary-row" style="justify-content:center;margin-top:40px;">
+      <div class="summary-pill"><span class="sp-label">TOTAL BUDGET</span><span class="sp-value gold">$264,820</span></div>
+      <div class="summary-pill"><span class="sp-label">NPS TARGET</span><span class="sp-value gold">+17.5%</span></div>
+      <div class="summary-pill"><span class="sp-label">REVENUE UPLIFT</span><span class="sp-value gold">$9.06M</span></div>
+      <div class="summary-pill"><span class="sp-label">PROJECTED ROI</span><span class="sp-value gold">33.21×</span></div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav" style="position:absolute;bottom:30px;left:60px;right:60px;">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">08 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 9: REC 8.1 — MARQUEE APP (OVERVIEW)
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-9">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label">Recommendation 8.1</div>
+    <div class="rec-header">
+      <div class="rec-icon-circle">📱</div>
+      <div class="rec-title-block">
+        <h2>The <span>Marquee App</span></h2>
+        <div class="slide-subtitle">A proprietary centralised platform to unify data, own the customer relationship, and operationalise analytical CRM</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="two-col wide">
+      <div>
+        <h3>Core App Features</h3>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">🎟️</div>
+            <div>
+              <div class="af-title">Centralised Ticketing Hub</div>
+              <div class="af-body">First-party data ownership across all entry types — ending the six-silo problem. Every customer becomes identifiable, scored, and trackable.</div>
+              <div class="tag active" style="margin-top:8px;display:inline-block;">Addresses: Fragmented CRM Data</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🏆</div>
+            <div>
+              <div class="af-title">Tiered Loyalty Programme</div>
+              <div class="af-body">Frequency-based tier progression (Bronze → Silver → Gold → Platinum) incentivises repeat visits and converts Misers into Rubies and Diamonds via behavioural loyalty building.</div>
+              <div class="tag active" style="margin-top:8px;display:inline-block;">Addresses: Low Brand Loyalty</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🎵</div>
+            <div>
+              <div class="af-title">Community Music Voting</div>
+              <div class="af-body">Customers vote on preferred genres for upcoming nights, creating anticipatory value and emotional investment before the visit even begins.</div>
+              <div class="tag active" style="margin-top:8px;display:inline-block;">Addresses: Music Misalignment</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🔔</div>
+            <div>
+              <div class="af-title">Personalised Push Notifications</div>
+              <div class="af-body">Event alerts triggered by user-set genre preferences — early bird access exclusive to app users, creating urgency and rewarding loyalty.</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">📊</div>
+            <div>
+              <div class="af-title">In-App Post-Visit Feedback</div>
+              <div class="af-body">Structured feedback loop replaces reliance on Google Reviews — enabling proactive service recovery before negative sentiment goes public.</div>
+              <div class="tag active" style="margin-top:8px;display:inline-block;">Addresses: Service Maintenance</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Implementation Roadmap</h3>
+        <div class="roadmap mt-12">
+          <div class="roadmap-phase rp-1">
+            <div class="rp-period">MONTHS 1–3</div>
+            <div class="rp-title">Drive Adoption</div>
+            <div class="rp-items">
+              <div class="rp-item">Target 5,000 active users</div>
+              <div class="rp-item">50% ticket purchases via app</div>
+              <div class="rp-item">Influencer &amp; promoter launch push</div>
+              <div class="rp-item">Centralise all customer profiles</div>
+            </div>
+          </div>
+          <div class="roadmap-phase rp-2">
+            <div class="rp-period">MONTHS 4–6</div>
+            <div class="rp-title">Drive Engagement</div>
+            <div class="rp-items">
+              <div class="rp-item">Activate genre preference targeting</div>
+              <div class="rp-item">Launch early bird exclusives</div>
+              <div class="rp-item">Deploy personalised push comms</div>
+              <div class="rp-item">Music voting system live</div>
+            </div>
+          </div>
+          <div class="roadmap-phase rp-3">
+            <div class="rp-period">MONTH 6+</div>
+            <div class="rp-title">Build Loyalty</div>
+            <div class="rp-items">
+              <div class="rp-item">Activate tiered loyalty programme</div>
+              <div class="rp-item">30% of users enrolled in tiers</div>
+              <div class="rp-item">CLV uplift tracking begins</div>
+              <div class="rp-item">Automated retention triggers</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout mt-16">
+          <strong>Competitive validation:</strong> Zouk Singapore already operates a successful club app — proof of concept that nightlife loyalty apps drive engagement and bookings in this market.
+        </div>
+
+        <div class="divider full mt-12"></div>
+        <h3 class="mt-12">CRM Theory Foundation</h3>
+        <div class="tag-row">
+          <span class="tag active">Operational CRM</span>
+          <span class="tag active">Analytical CRM</span>
+          <span class="tag">RFM Scoring</span>
+          <span class="tag">LTV = m[r/1+i-r]</span>
+          <span class="tag">Dick &amp; Basu — Latent → Loyal</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">09 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 10: REC 8.2 — MUSIC
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-10">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label">Recommendation 8.2</div>
+    <div class="rec-header">
+      <div class="rec-icon-circle">🎵</div>
+      <div class="rec-title-block">
+        <h2>Music Experience <span>Alignment</span></h2>
+        <div class="slide-subtitle">Closing Gap 1 and Gap 4 by creating systematic genre transparency and a dedicated Music Experience Team</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>Initiative A — Tiered Event Classification</h3>
+        <p class="text-sm text-silver mt-8">Every event is categorised and labelled consistently across all touchpoints</p>
+        <div class="cards-grid three mt-12" style="gap:12px;">
+          <div class="card" style="text-align:center;">
+            <div class="card-icon">⭐</div>
+            <div class="card-title">Headliner Night</div>
+            <div class="card-body" style="font-size:12px;">International act — premium positioning, premium expectations. Clearly marked on all channels.</div>
+          </div>
+          <div class="card" style="text-align:center;">
+            <div class="card-icon">🎧</div>
+            <div class="card-title">Resident DJ Night</div>
+            <div class="card-body" style="font-size:12px;">Local/resident talent — set expectations accurately. No overpromising on marketing collateral.</div>
+          </div>
+          <div class="card" style="text-align:center;">
+            <div class="card-icon">🎭</div>
+            <div class="card-title">Themed Night</div>
+            <div class="card-body" style="font-size:12px;">Genre-locked events — mandatory genre adherence. DJ briefed and accountable to theme.</div>
+          </div>
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3 class="mt-12">Initiative B — Standardised Genre Tags</h3>
+        <p class="text-sm text-silver mt-8">Primary genre classification applied uniformly across all customer-facing platforms</p>
+        <div class="silo-row mt-8" style="flex-wrap:wrap;">
+          <div class="silo-pill" style="border-color:rgba(212,175,55,0.3);color:var(--gold-light);">🏷️ Hip-Hop / Open Format</div>
+          <div class="silo-pill" style="border-color:rgba(212,175,55,0.3);color:var(--gold-light);">🏷️ Tech House</div>
+          <div class="silo-pill" style="border-color:rgba(212,175,55,0.3);color:var(--gold-light);">🏷️ EDM / Commercial</div>
+          <div class="silo-pill" style="border-color:rgba(212,175,55,0.3);color:var(--gold-light);">🏷️ Afrobeats</div>
+          <div class="silo-pill" style="border-color:rgba(212,175,55,0.3);color:var(--gold-light);">🏷️ Latin Night</div>
+        </div>
+        <p class="text-xs mt-8">Applied across: Aentry ticketing platform · Marquee App · Instagram/TikTok · Event listings</p>
+      </div>
+
+      <div>
+        <h3>Initiative C — Music Experience Team</h3>
+        <p class="text-sm text-silver mt-8">An internal team responsible for preserving and evolving Marquee's sonic identity</p>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">📋</div>
+            <div>
+              <div class="af-title">Pre-Performance DJ Briefings</div>
+              <div class="af-body">Every DJ receives a standardised briefing aligned to the event's stated theme and genre before taking the stage</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">📸</div>
+            <div>
+              <div class="af-title">Preview Content Production</div>
+              <div class="af-body">Short preview clips posted to the Marquee App set expectations ahead of the night, reducing post-visit disappointment</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🗳️</div>
+            <div>
+              <div class="af-title">Community Voting Integration</div>
+              <div class="af-body">App voting data informs upcoming event curation — customers feel co-ownership of the Marquee experience, fostering attitudinal loyalty</div>
+            </div>
+          </div>
+        </div>
+        <div class="callout mt-16">
+          <strong>CRM Linkage:</strong> Music alignment directly addresses <strong>Gap 1</strong> (knowledge) and <strong>Gap 4</strong> (communication) in Parasuraman's SERVQUAL model. Closing both is a prerequisite for closing <strong>Gap 5</strong> — perceived vs expected service — and converting Latent Loyals into true Loyals.
+        </div>
+        <div class="tag-row mt-12">
+          <span class="tag active">Gap 1 — Knowledge</span>
+          <span class="tag active">Gap 4 — Communication</span>
+          <span class="tag">Kano — Basic → Linear Quality</span>
+          <span class="tag">Value-in-Experience</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">10 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 11: REC 8.3 — PROFESSIONAL TRAINING PH1
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-11">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label">Recommendation 8.3 — Phase 1</div>
+    <div class="rec-header">
+      <div class="rec-icon-circle">🎓</div>
+      <div class="rec-title-block">
+        <h2>Professional Training — <span>Functional Skills</span></h2>
+        <div class="slide-subtitle">Role-play based training that transforms every touchpoint from task execution to premium experience delivery</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="two-col wide">
+      <div>
+        <h3>Training Philosophy</h3>
+        <p class="text-sm text-silver mt-8">Functional training at Marquee must move beyond basic task compliance. Staff must become <em>expert guest advisors</em> — anticipating needs, managing expectations, and elevating every moment.</p>
+
+        <div class="phase-row mt-16">
+          <div class="phase-step">
+            <div class="phase-num">LEVEL 1</div>
+            <div class="phase-title">Information Providing</div>
+            <div class="phase-body">Accurate, confident knowledge of product, venue, and policies</div>
+          </div>
+          <div class="phase-step p2">
+            <div class="phase-num">LEVEL 2</div>
+            <div class="phase-title">Experience Enhancing</div>
+            <div class="phase-body">Proactive anticipation of needs; upselling through storytelling</div>
+          </div>
+          <div class="phase-step p3">
+            <div class="phase-num">LEVEL 3</div>
+            <div class="phase-title">Marquee Moments</div>
+            <div class="phase-body">Surprise &amp; delight — turning ordinary touchpoints into memories</div>
+          </div>
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3 class="mt-12">Interpersonal Skills Development</h3>
+        <p class="text-sm text-silver mt-8">Activities that build camaraderie, cultural sophistication, and genuine care — in alignment with Four Seasons' staff selection philosophy</p>
+        <div class="cards-grid two mt-12" style="gap:12px;">
+          <div class="card">
+            <div class="card-icon">🍷</div>
+            <div class="card-title">Wine &amp; Spirits Appreciation</div>
+            <div class="card-body">Staff participate in tastings to develop product knowledge and ability to bond authentically with high-net-worth guests</div>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎭</div>
+            <div class="card-title">Performing Arts Programmes</div>
+            <div class="card-body">Team participation in creative activities builds camaraderie, poise under pressure, and a service-oriented mindset</div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Role-Play Training Scenarios</h3>
+        <p class="text-sm text-silver mt-8">Scenes drawn directly from Marquee's most frequent complaint categories — converting real failure points into structured training moments</p>
+        <table class="scene-table mt-12">
+          <thead>
+            <tr>
+              <th>Scene / Touchpoint</th>
+              <th>Learning Objective</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><span class="scene-highlight">🚪 Scene 1: Entry &amp; Queue</span><br/>VIP group frustrated by 20-min wait despite pre-booked table</td>
+              <td>Proactive communication; manage expectations without compromising security protocols</td>
+            </tr>
+            <tr>
+              <td><span class="scene-highlight">🥂 Scene 2: Bottle Service</span><br/>High-value client orders out-of-stock champagne during peak set</td>
+              <td>Offer seamless high-value alternatives; execute "Marquee Show" flawlessly despite inventory constraints</td>
+            </tr>
+            <tr>
+              <td><span class="scene-highlight">⚠️ Scene 3: Floor Conflict</span><br/>Intoxicated guest causing discomfort; refuses to move</td>
+              <td>Identify early intoxication signs; intervene discreetly to protect the premium environment for all</td>
+            </tr>
+            <tr>
+              <td><span class="scene-highlight">💳 Scene 4: Billing &amp; Departure</span><br/>Guest disputes minimum spend charge at closing time</td>
+              <td>Transparent policy communication; efficient POS handling; preserve the final impression of the night</td>
+            </tr>
+          </tbody>
+        </table>
+        <div class="callout mt-16">
+          <strong>ERM Principle:</strong> Staff who genuinely believe customers deserve great service — not just those trained to simulate it — create sustainable loyalty. Rigorous 4–5 interview selection ensures only candidates with intrinsic hospitality values join the floor team.
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">11 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 12: REC 8.3 — TRAINING PHASE 2 (ONGOING)
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-12">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label">Recommendation 8.3 — Phase 2</div>
+    <div class="rec-header">
+      <div class="rec-icon-circle">🔄</div>
+      <div class="rec-title-block">
+        <h2>Training — <span>Institutionalising</span> Service Standards</h2>
+        <div class="slide-subtitle">Closing Gap 3 permanently through bi-monthly incident reviews and a debrief culture that creates accountability and continuous improvement</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>Bi-Monthly Anonymous Incident Reviews</h3>
+        <p class="text-sm text-silver mt-8">Group problem-solving sessions that use real complaint data (Google Reviews, app feedback) as training materials — converting failures into institutional learning</p>
+        <div class="app-features mt-12">
+          <div class="app-feature">
+            <div class="af-icon">🔒</div>
+            <div>
+              <div class="af-title">Anonymous Submission System</div>
+              <div class="af-body">Staff submit incidents without fear of blame. Creates psychological safety essential for honest reporting and team learning</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">📝</div>
+            <div>
+              <div class="af-title">Review → Action Loop</div>
+              <div class="af-body">Every complaint is mapped to a SERVQUAL dimension, a responsible team, and a corrective action with a deadline — preventing recurrence</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">📈</div>
+            <div>
+              <div class="af-title">NPS Tracking by Team</div>
+              <div class="af-body">Teams compete on NPS and App feedback scores. Top performers receive recognition at company events — creating intrinsic motivation to excel</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="callout mt-16">
+          <strong>SERVQUAL Dimensions Targeted:</strong>
+          <br/><br/>
+          <strong>Reliability</strong> — Consistent execution of the "promised service" even under peak-night pressure<br/><br/>
+          <strong>Responsiveness</strong> — A debrief culture builds willingness to serve and handle complaints promptly
+        </div>
+      </div>
+
+      <div>
+        <h3>Service Performance Improvement — SERVQUAL Framework</h3>
+        <div class="cards-grid" style="grid-template-columns:1fr;gap:12px;margin-top:16px;">
+          <div class="card" style="border-left:3px solid var(--gold-light);border-radius:0 8px 8px 0;">
+            <div class="card-title">Gap 3 Closure Strategy</div>
+            <div class="card-body">Align service delivery with management's quality specifications through standardised SOPs, role-play training, and regular incident reviews</div>
+          </div>
+          <div class="card" style="border-left:3px solid var(--silver);border-radius:0 8px 8px 0;">
+            <div class="card-title">Staff Empowerment Protocol</div>
+            <div class="card-body">Front-line staff are empowered to make service recovery decisions up to a supervisor-level cap — without needing management approval for every guest complaint</div>
+          </div>
+          <div class="card" style="border-left:3px solid #9a6bda;border-radius:0 8px 8px 0;">
+            <div class="card-title">Motivational Alignment</div>
+            <div class="card-body">Outstanding service is rewarded publicly at annual events. This signal — visible to all staff — creates a culture where excellent service is aspirational, not performative</div>
+          </div>
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3 class="mt-12">Expected Service Quality Outcomes</h3>
+        <div class="stat-row mt-8">
+          <div class="stat-box silver-top">
+            <div class="stat-number">↑</div>
+            <div class="stat-label">Reliability score across peak nights</div>
+          </div>
+          <div class="stat-box silver-top">
+            <div class="stat-number">↓</div>
+            <div class="stat-label">Service-related negative Google Reviews</div>
+          </div>
+          <div class="stat-box">
+            <div class="stat-number text-gold">β=0.23</div>
+            <div class="stat-label">Service satisfaction improvement cascades directly to overall NPS</div>
+          </div>
+        </div>
+        <div class="tag-row mt-8">
+          <span class="tag active">SERVQUAL Gap 3</span>
+          <span class="tag">ERM — Staff Empowerment</span>
+          <span class="tag">Trust: Competence + Reliability</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">12 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 13: REC 8.4 — VIP EXPERIENCE
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-13">
+  <div class="bg-glow glow-1"></div>
+  <div class="slide-content">
+    <div class="section-label">Recommendation 8.4</div>
+    <div class="rec-header">
+      <div class="rec-icon-circle">👑</div>
+      <div class="rec-title-block">
+        <h2>Strengthening VIP <span>Value Perception</span></h2>
+        <div class="slide-subtitle">Moving Diamond and Ruby customers from functional exclusivity to emotional exclusivity — making the premium price feel unquestionably justified</div>
+      </div>
+    </div>
+    <div class="divider"></div>
+
+    <div class="two-col">
+      <div>
+        <h3>The Core Problem — VIP Parity</h3>
+        <div class="callout red mt-12">
+          When VIP customers perceive they are receiving a <strong>similar experience to general admission at a higher price</strong>, perceived value collapses — even when affordability is not the issue. Diamonds and Rubies are paying for <strong>status, exclusivity, and recognition</strong>, not just alcohol and entry.
+        </div>
+
+        <div class="divider full mt-16"></div>
+        <h3 class="mt-12">Functional Exclusivity — SOPs</h3>
+        <div class="app-features mt-8">
+          <div class="app-feature">
+            <div class="af-icon">⏱️</div>
+            <div>
+              <div class="af-title">Maximum Bottle Service Wait Times</div>
+              <div class="af-body">Standardised SOP: no VIP table waits more than 8 minutes for bottle service. Tracked and enforced via floor manager accountability</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🤵</div>
+            <div>
+              <div class="af-title">Dedicated Table Host Per Group</div>
+              <div class="af-body">Each VIP booking is assigned a named table host — a consistent point of contact who manages the entire experience from arrival to departure</div>
+            </div>
+          </div>
+          <div class="app-feature">
+            <div class="af-icon">🚪</div>
+            <div>
+              <div class="af-title">Priority Entry — Zero Queue</div>
+              <div class="af-body">Diamond-tier and Platinum App members enter via a dedicated lane, eliminating the most commonly cited VIP frustration point</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div>
+        <h3>Emotional Exclusivity — Status &amp; Recognition</h3>
+        <p class="text-sm text-silver mt-8">Initiatives designed to generate social currency, prestige, and genuine emotional attachment to the Marquee brand</p>
+        <div class="vip-tier-row mt-12">
+          <div class="vip-tier vt-diamond">
+            <div class="vt-title">💎 Diamond VIPs</div>
+            <div class="vt-desc">Top 10% by spend — the highest-value relationship to protect</div>
+            <div class="vt-perk">DJ meet-and-greet access backstage</div>
+            <div class="vt-perk">Priority song requests during the set</div>
+            <div class="vt-perk">DJ shoutouts from the booth</div>
+            <div class="vt-perk">Customised table signage &amp; branded bottle service</div>
+            <div class="vt-perk">Relationship Manager tracking preferences &amp; history</div>
+          </div>
+          <div class="vip-tier vt-ruby">
+            <div class="vt-title">🔴 Ruby VIPs</div>
+            <div class="vt-desc">Next 20% by spend — ready to migrate upward with the right nudge</div>
+            <div class="vt-perk">Personalised event invitations based on preferences</div>
+            <div class="vt-perk">Loyalty-based upgrade surprises to Diamond perks</div>
+            <div class="vt-perk">Content-first photo/video moments at table</div>
+            <div class="vt-perk">Early access to headline event tickets via App</div>
+          </div>
+        </div>
+
+        <div class="callout mt-16">
+          <strong>Content-First Strategy:</strong> Shareable, premium VIP moments — customised signage, bottle parades, DJ shoutouts — function as organic social media content that simultaneously delivers emotional value to VIPs and builds aspirational appeal among Common Stones. This converts the VIP section into a visible upgrade target, driving the Miser → Ruby pipeline.
+        </div>
+        <div class="tag-row mt-12">
+          <span class="tag active">CLV Maximisation</span>
+          <span class="tag active">Structural Bonds</span>
+          <span class="tag">Customer Delight</span>
+          <span class="tag">Kano — Attractive Quality</span>
+          <span class="tag">Francis Buttle — Value Prop Dev</span>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">13 / 14</span>
+    <button class="btn btn-gold" onclick="nextSlide()">Next →</button>
+  </div>
+</div>
+
+<!-- ═══════════════════════════════════════════════
+     SLIDE 14: CONCLUSION / SUMMARY
+═══════════════════════════════════════════════ -->
+<div class="slide" id="slide-14">
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
+  <div class="slide-content">
+    <div class="section-label">Strategic Summary</div>
+    <h2>An Integrated Roadmap to <span>Customer Equity</span></h2>
+    <div class="slide-subtitle">Four recommendations, one mission — converting Marquee's premium positioning into premium loyalty</div>
+    <div class="divider"></div>
+
+    <div class="cards-grid four mt-8">
+      <div class="card">
+        <div class="card-icon">📱</div>
+        <div class="card-title">8.1 Marquee App</div>
+        <div class="card-body">Unifies six data silos into a single customer profile. Enables analytical CRM, personalisation, and the loyalty programme. Closes the data gap that makes all other analytics impossible.</div>
+        <div class="card-tag">Addresses: Data Fragmentation</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎵</div>
+        <div class="card-title">8.2 Music Alignment</div>
+        <div class="card-body">Tiered event classification and genre tagging closes Gap 1 and Gap 4. Music Experience Team ensures consistent delivery of advertised experiences across all nights.</div>
+        <div class="card-tag">Addresses: Music Misalignment</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">🎓</div>
+        <div class="card-title">8.3 Staff Training</div>
+        <div class="card-body">Two-phase programme — functional role-play (Phase 1) and institutional incident reviews (Phase 2) — systematically closes Gap 3 and builds a culture of consistent service excellence.</div>
+        <div class="card-tag">Addresses: Service Failure</div>
+      </div>
+      <div class="card">
+        <div class="card-icon">👑</div>
+        <div class="card-title">8.4 VIP Experience</div>
+        <div class="card-body">Emotional and functional exclusivity for Diamond and Ruby tiers. SOPs eliminate VIP pain points; DJ privileges and shareable moments create aspirational status visible to all segments.</div>
+        <div class="card-tag">Addresses: Price-Value Gap</div>
+      </div>
+    </div>
+
+    <div class="divider full"></div>
+
+    <div class="summary-row">
+      <div class="summary-pill">
+        <span class="sp-label">CURRENT NPS</span>
+        <span class="sp-value red">−12.5%</span>
+      </div>
+      <div class="summary-pill">
+        <span class="sp-label">TARGET NPS</span>
+        <span class="sp-value gold">+17.5%</span>
+      </div>
+      <div class="summary-pill">
+        <span class="sp-label">INVESTMENT</span>
+        <span class="sp-value">$264,820</span>
+      </div>
+      <div class="summary-pill">
+        <span class="sp-label">REVENUE UPLIFT</span>
+        <span class="sp-value gold">$9.06M</span>
+      </div>
+      <div class="summary-pill">
+        <span class="sp-label">ROI MULTIPLE</span>
+        <span class="sp-value gold">33.21×</span>
+      </div>
+    </div>
+
+    <div class="callout mt-16">
+      <strong>The strategic logic:</strong> Closing service and music gaps → raises satisfaction → raises NPS → converts Misers to Advocates and Loyals → increases CLV and CRV → grows customer equity. The App provides the data infrastructure to measure, target, and automate this entire pipeline. Every dollar invested addresses a root cause of the loyalty deficit identified through rigorous primary and secondary research.
+    </div>
+
+    <div class="tag-row">
+      <span class="tag active">Strategic CRM</span>
+      <span class="tag active">Analytical CRM</span>
+      <span class="tag active">Operational CRM</span>
+      <span class="tag">Francis Buttle's Model</span>
+      <span class="tag">SERVQUAL</span>
+      <span class="tag">Dick &amp; Basu</span>
+      <span class="tag">Van Westendorp</span>
+      <span class="tag">NPS Economics</span>
+      <span class="tag">Kano Model</span>
+    </div>
+  </div>
+  <div class="slide-footer"></div>
+  <div class="slide-nav">
+    <button class="btn btn-outline" onclick="prevSlide()">← Back</button>
+    <span class="slide-num">14 / 14</span>
+    <button class="btn btn-outline btn-hidden">→</button>
+  </div>
+</div>
+
+<script>
+  const TOTAL = 14;
+  let current = 1;
+
+  function buildDots() {
+    const dots = document.getElementById('navDots');
+    dots.innerHTML = '';
+    for (let i = 1; i <= TOTAL; i++) {
+      const d = document.createElement('div');
+      d.className = 'dot' + (i === current ? ' active' : '');
+      d.onclick = () => goTo(i);
+      d.title = 'Slide ' + i;
+      dots.appendChild(d);
+    }
+  }
+
+  function goTo(n) {
+    document.getElementById('slide-' + current)?.classList.remove('active');
+    current = Math.max(1, Math.min(TOTAL, n));
+    document.getElementById('slide-' + current)?.classList.add('active');
+    document.getElementById('navCounter').textContent =
+      String(current).padStart(2, '0') + ' / ' + String(TOTAL).padStart(2, '0');
+    buildDots();
+    window.scrollTo(0, 0);
+  }
+
+  function nextSlide() { goTo(current + 1); }
+  function prevSlide() { goTo(current - 1); }
+
+  // Keyboard navigation
+  document.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') nextSlide();
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') prevSlide();
+  });
+
+  buildDots();
+</script>
+</body>
+</html>
